@@ -1,1 +1,1 @@
-# ejs-project-boilerplate
+# SIMPLE CHAT APP
