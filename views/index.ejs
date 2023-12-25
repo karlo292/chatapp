@@ -1,0 +1,100 @@
+<%- include('partials/header.ejs') %>
+
+<main>
+    <div class="mainDiv">
+
+        <div id="messageArea"></div>
+        <div>
+            <form id="chatForm">
+                <input id="messageInput" type="text" placeholder="Please login to start typing">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+<script>
+    const socket = io();
+    const messageArea = document.getElementById('messageArea');
+    const chatForm = document.getElementById('chatForm');
+    const messageInput = document.getElementById('messageInput');
+
+    const maxMessages = 50;
+    let displayedMessages = 0;
+
+    socket.on('connect', () => {
+        console.log('Connected to server');
+
+        if ( <%= isLoggedIn %> ) {
+            messageInput.placeholder = 'Type your message'
+        }
+
+        scrollToBottom();
+    });
+
+    // Handle form submission
+    chatForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const message = messageInput.value.trim();
+        if (message) {
+            socket.emit('chat message', message);
+            scrollToBottom();
+            messageInput.value = '';
+        }
+    });
+
+    socket.on('chat history', (history) => {
+        history.slice(-maxMessages).forEach((data) => {
+            appendMessage(data);
+        });
+        scrollToBottom();
+    });
+
+    socket.on('chat message', (data) => {
+        appendMessage(data);
+        scrollToBottom();
+    });
+
+    function appendMessage(data) {
+        if (displayedMessages >= maxMessages) {
+            // Remove the oldest message if the max limit is reached
+            messageArea.removeChild(messageArea.firstElementChild);
+        }
+
+        const usernameText = document.createElement('h5');
+        if (data.username === '') {
+            usernameText.textContent = data.username;
+        } else {
+            usernameText.textContent = data.username + ': ';
+        }
+
+        const messageText = document.createElement('p');
+        messageText.textContent = data.message;
+
+        messageArea.appendChild(usernameText);
+        messageArea.appendChild(messageText);
+
+        displayedMessages += 1;
+    }
+
+    function scrollToBottom() {
+        requestAnimationFrame(() => {
+            messageArea.scrollTop = messageArea.scrollHeight;
+        });
+    }
+
+    // Handle scroll event to load more messages
+    messageArea.addEventListener('scroll', () => {
+        if (messageArea.scrollTop === 0) {
+            // User scrolled to the top, load more messages
+            // You may want to implement a mechanism to fetch more messages from the server
+            console.log('Load more messages...');
+        }
+    });
+</script>
+
+
+
+<%- include('partials/footer.ejs') %>

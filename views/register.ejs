@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+<main id="registerForm">
+    <form action="/register" method="post" class="p-4 border rounded" onsubmit="return validateForm()">
+        <h2 class="mb-4">Register</h2>
+        <div class="form-group mb-4">
+            <label for="username" class="sr-only">Username:</label>
+            <input type="text" name="username" id="username" class="form-control form-control-lg rounded-0" placeholder="Username">
+        </div>
+        <div class="form-group mb-4">
+            <label for="email" class="sr-only">Email:</label>
+            <input type="text" name="email" id="email" class="form-control form-control-lg rounded-0" placeholder="Email">
+        </div>
+        <div class="form-group mb-4">
+            <label for="password" class="sr-only">Password:</label>
+            <input type="password" name="password" id="password" class="form-control form-control-lg rounded-0" placeholder="Password">
+        </div>
+        <div class="form-group mb-4">
+            <label for="repeat-password" class="sr-only">Confirm Password:</label>
+            <input type="password" name="repeat-password" id="repeat-password" class="form-control form-control-lg rounded-0" placeholder="Repeat Password">
+            <small id="passwordMatchError" class="text-danger d-none">Passwords do not match</small>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg d-block mx-auto rounded-0">Register</button>
+    </form>
+</main>
+
+<script>
+    function validateForm() {
+        var password = document.getElementById('password').value;
+        var repeatPassword = document.getElementById('repeat-password').value;
+        var errorElement = document.getElementById('passwordMatchError');
+
+        if (password !== repeatPassword) {
+            errorElement.classList.remove('d-none');
+            return false;
+        } else {
+            errorElement.classList.add('d-none');
+            return true;
+        }
+    }
+</script>
+
+<%- include('partials/footer') %>

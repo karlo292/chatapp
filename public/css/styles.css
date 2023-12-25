@@ -1,0 +1,70 @@
+body {
+    background-color: rgb(42, 42, 42) !important;
+}
+
+h1,h2,h3,h4,h5,h6,p {
+    color: white;
+}
+
+h5 {
+    font-size: 14px;
+    font-weight: bold;
+}
+p {
+    font-size: 14px;
+}
+
+#messageArea {
+    line-height: 0.8;
+    background: rgb(70, 70, 70);
+    height: 80vh;
+    margin-top: 1rem;
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    white-space: pre-wrap;
+}
+
+.mainDiv {
+    width: 98%;
+    margin: auto;
+    height: auto;
+    margin-top: 3rem;
+}
+
+
+div > #loginRegister {
+    display: flex;
+    justify-content: flex-start;
+    
+}
+#loginRegister a {
+    padding-right: 6px;
+    padding-left: 6px;
+    
+}
+
+#loginRegister {
+    padding-left: 10px;
+}
+
+div > #chatForm {
+    display: flex;
+    justify-content: center;
+}
+
+#chatForm input {
+    width: 50%;
+}
+
+#loginForm form {
+    max-width: 700px;
+    margin: auto;
+    margin-top: 10rem;
+}
+
+#registerForm {
+    max-width: 700px;
+    margin: auto;
+    margin-top: 10rem;
+}
