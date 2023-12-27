@@ -1,14 +1,14 @@
 {
   "users": [
     {
-      "username": "asdasd",
-      "password": "wasd",
-      "email": "karlito1501@gmail.com"
+      "username": "test1",
+      "password": "test1",
+      "email": "test@gmail.com"
     },
     {
-      "username": "a",
-      "password": "a",
-      "email": "karlito1501@gmail.com"
+      "username": "test2",
+      "password": "test2",
+      "email": "test@gmail.com"
     }
   ]
 }

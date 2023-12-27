@@ -58,25 +58,27 @@
     });
 
     function appendMessage(data) {
-        if (displayedMessages >= maxMessages) {
-            // Remove the oldest message if the max limit is reached
-            messageArea.removeChild(messageArea.firstElementChild);
+            if (data.username != undefined && data.username != 'undefined' && data.username != null) {
+            if (displayedMessages >= maxMessages) {
+                // Remove the oldest message if the max limit is reached
+                messageArea.removeChild(messageArea.firstElementChild);
+            }
+            
+            const usernameText = document.createElement('h5');
+            if (data.username === '') {
+                usernameText.textContent = data.username;
+            } else {
+                usernameText.textContent = data.username + ': ';
+            }
+
+            const messageText = document.createElement('p');
+            messageText.textContent = data.message;
+
+            messageArea.appendChild(usernameText);
+            messageArea.appendChild(messageText);
+
+            displayedMessages += 1;
         }
-
-        const usernameText = document.createElement('h5');
-        if (data.username === '') {
-            usernameText.textContent = data.username;
-        } else {
-            usernameText.textContent = data.username + ': ';
-        }
-
-        const messageText = document.createElement('p');
-        messageText.textContent = data.message;
-
-        messageArea.appendChild(usernameText);
-        messageArea.appendChild(messageText);
-
-        displayedMessages += 1;
     }
 
     function scrollToBottom() {

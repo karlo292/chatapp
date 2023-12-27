@@ -66,6 +66,28 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/gaming', (req, res) => {
+    let isLoggedIn
+    const existingUsers = userDB.readDatabase().users
+    
+    try {
+        console.log(req.session.user.username)
+        if (existingUsers.some(user => user.username === req.session.user.username)) {
+            isLoggedIn = true
+        } else {
+            isLoggedIn = false
+        }
+    } catch (error) {
+        isLoggedIn = false
+    }
+    console.log(isLoggedIn)
+    res.render('index', {
+        isLoggedIn:isLoggedIn,
+    })
+
+})
+
+
 app.get('/register', (req, res) => {
     res.render('register');
 });
@@ -187,19 +209,18 @@ socket.on('chat message', (message) => {
         lastMessageUser = socket.username;
     }
 });
+})
 
-socket.on('disconnect', () => {
-    console.log('User disconnected');
-});
-});
+
 
 // Gets username of user that's logged in
 function handleSocketConnection(username) {
     io.on('connection', (socket) => {
         console.log('A user connected');
         socket.username = username;
-    })
+    });
 }
+
 
 httpServer.listen(config.port, () => {
     console.log(`Server is running on port ${config.port}`);
